@@ -20,9 +20,10 @@ namespace TodoAPI {
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Adding the db context to this method, which is our 
-            // dependency injection container
-            
+            /* 
+             * Adding the db context to this method, which is our 
+             * dependency injection container           
+            */
             services.AddDbContext<TodoContext>(opt =>
                opt.UseInMemoryDatabase("TodoList")
             );
