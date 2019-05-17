@@ -38,7 +38,7 @@ namespace TodoAPI.Controllers {
          */         
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems() {
-
+        
             return await _context.TodoItems.ToListAsync();
 
         }
@@ -75,6 +75,7 @@ namespace TodoAPI.Controllers {
                 item
             );
         }
+
 
         // PUT: api/todo/7
         [HttpPut("{id}")]
