@@ -29,7 +29,13 @@ namespace TodoAPI.Controllers {
             }
         }
 
-        // GET: api/todo
+        /* GET: api/todo
+         * 
+         * having ActionResult<T> return type automatically serialises
+         * the object into JSON, as well as the respective response code
+         * this can be 200 OK or 5xx error, etc etc.
+         * 
+         */         
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems() {
 
@@ -56,7 +62,56 @@ namespace TodoAPI.Controllers {
 
         }
 
+        // POST: api/todo
+        [HttpPost]
+        public async Task<ActionResult<TodoItem>> PostTodoItem(TodoItem item) {
 
+            _context.TodoItems.Add(item);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(
+                nameof(GetTodoItem),
+                new { id = item.Id },
+                item
+            );
+        }
+
+        // PUT: api/todo/7
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutTodoItem(long id, TodoItem item) {
+
+            if (id != item.Id) {
+                return BadRequest();
+            }
+
+            _context.Entry(item).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+
+        }
+
+        // To_do
+        // PATCH: api/todo/7
+
+
+        // DELETE: api/todo/7
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTodoItem(long id) {
+
+            var todoItem = await _context.TodoItems.FindAsync(id);
+
+            if (todoItem is null) {
+                return NotFound();
+            }
+
+            // actually removing it from the DB
+            _context.TodoItems.Remove(todoItem);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+
+        }
     }
 
 }
