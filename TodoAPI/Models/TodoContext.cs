@@ -11,5 +11,7 @@ namespace TodoAPI.Models {
 
         // Just like Java this is <DataType>
         public DbSet<TodoItem> TodoItems { get; set;}
+        public DbSet<Student> Student { get; set; }
+
     }
 }
